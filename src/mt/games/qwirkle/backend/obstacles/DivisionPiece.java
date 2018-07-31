@@ -3,11 +3,11 @@ package mt.games.qwirkle.backend.obstacles;
 import java.awt.*;
 
 public class DivisionPiece extends GamePiece {
-    public DivisionPiece(Colours colour) {
+    public DivisionPiece(ValidColour colour) {
         super(colour);
     }
 
-    public DivisionPiece(Colours colour, GamePos pos) {
+    public DivisionPiece(ValidColour colour, GamePos pos) {
         super(colour, pos);
     }
 

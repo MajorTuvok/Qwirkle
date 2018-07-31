@@ -15,5 +15,15 @@ public class ClientGame {
 
     public void setPiece(GamePiece piece) {
         GamePos pos = piece.getPos();
+        assert pos.getX() > 0 && pos.getY() > 0 : "Positions can never be negative!";
+        if (pos.getY() < getGrid().size()) {
+            List<GamePiece> row = getGrid().get(pos.getY());
+        } else {
+
+        }
+    }
+
+    protected List<List<GamePiece>> getGrid() {
+        return mGrid;
     }
 }
