@@ -10,6 +10,6 @@ public class GamePiece implements IRendable {
 
     @Override
     public void render(Graphics2D graphics2D) {
-
+        
     }
 }
