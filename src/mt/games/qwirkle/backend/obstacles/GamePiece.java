@@ -2,17 +2,15 @@ package mt.games.qwirkle.backend.obstacles;
 
 import mt.games.qwirkle.gui.IRenderable;
 
-import java.awt.*;
-
 public abstract class GamePiece implements IRenderable {
-    private Color mColour;
+    private Colours mColour;
     private GamePos mGridPos;
 
-    public GamePiece(Color colour) {
+    public GamePiece(Colours colour) {
         this(colour, new GamePos(0, 0));
     }
 
-    public GamePiece(Color colour, GamePos pos) {
+    public GamePiece(Colours colour, GamePos pos) {
         this.mColour = colour;
         this.mGridPos = pos;
     }
@@ -26,11 +24,11 @@ public abstract class GamePiece implements IRenderable {
         return mGridPos;
     }
 
-    public Color getColour() {
+    public Colours getColour() {
         return mColour;
     }
 
-    public void setColour(Color colour) {
+    public void setColour(Colours colour) {
         mColour = colour;
     }
 }

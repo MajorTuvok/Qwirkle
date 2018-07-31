@@ -4,7 +4,7 @@ import java.awt.*;
 
 public class VoidPiece extends GamePiece {
     public VoidPiece(GamePos pos) {
-        super(Color.BLACK, pos);
+        super(Colours.NONE, pos);
     }
 
     @Override

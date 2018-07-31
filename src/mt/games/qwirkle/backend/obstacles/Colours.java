@@ -6,6 +6,7 @@ public enum Colours {
     KARMINRED,
     CITRONYELLOW,
     SAP_GREEN,
+    NONE,
     MEDIUM_ORCHID_1;
 
 }

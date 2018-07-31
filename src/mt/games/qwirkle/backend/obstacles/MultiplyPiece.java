@@ -4,11 +4,11 @@ import java.awt.*;
 
 public class MultiplyPiece extends GamePiece {
 
-    public MultiplyPiece(Color colour) {
+    public MultiplyPiece(Colours colour) {
         super(colour);
     }
 
-    public MultiplyPiece(Color colour, GamePos pos) {
+    public MultiplyPiece(Colours colour, GamePos pos) {
         super(colour, pos);
     }
 

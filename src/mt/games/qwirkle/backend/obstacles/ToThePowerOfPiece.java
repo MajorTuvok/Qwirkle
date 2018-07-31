@@ -3,11 +3,11 @@ package mt.games.qwirkle.backend.obstacles;
 import java.awt.*;
 
 public class ToThePowerOfPiece extends GamePiece {
-    public ToThePowerOfPiece(Color colour) {
+    public ToThePowerOfPiece(Colours colour) {
         super(colour);
     }
 
-    public ToThePowerOfPiece(Color colour, GamePos pos) {
+    public ToThePowerOfPiece(Colours colour, GamePos pos) {
         super(colour, pos);
     }
 
