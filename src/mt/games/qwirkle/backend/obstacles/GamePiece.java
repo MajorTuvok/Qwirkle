@@ -6,7 +6,20 @@ import java.awt.*;
 
 public class GamePiece implements IRendable {
     private Color mColour;
+    private GamePos mGridPos;
 
+    public GamePiece(Color colour) {
+        this.mColour = colour;
+        this.mGridPos = new GamePos(0, 0);
+    }
+
+    public GamePos getmGridPos() {
+        return mGridPos;
+    }
+
+    public void setmGridPos(GamePos mGridPos) {
+        this.mGridPos = mGridPos;
+    }
 
     @Override
     public void render(Graphics2D graphics2D) {
