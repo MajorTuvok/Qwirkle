@@ -9,15 +9,28 @@ public abstract class GamePiece implements IRendable {
     private GamePos mGridPos;
 
     public GamePiece(Color colour) {
-        this.mColour = colour;
-        this.mGridPos = new GamePos(0, 0);
+        this(colour, new GamePos(0, 0));
     }
 
-    public GamePos getmGridPos() {
+    public GamePiece(Color colour, GamePos pos) {
+        this.mColour = colour;
+        this.mGridPos = pos;
+    }
+
+    public void setGridPos(GamePos mGridPos) {
+        this.mGridPos = mGridPos;
+    }
+
+    @Override
+    public GamePos getPos() {
         return mGridPos;
     }
 
-    public void setmGridPos(GamePos mGridPos) {
-        this.mGridPos = mGridPos;
+    public Color getColour() {
+        return mColour;
+    }
+
+    public void setColour(Color colour) {
+        mColour = colour;
     }
 }

@@ -9,6 +9,11 @@ public class GamePos {
         this.y = y;
     }
 
+    public GamePos(GamePos pos) {
+        this.x = pos.getX();
+        this.y = pos.getY();
+    }
+
     public int getX() {
         return x;
     }

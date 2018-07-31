@@ -6,4 +6,5 @@ public class Constants {
 
     public static final String NAME_MULTIPLAYER_DIALOG = "Choose Game-Mode";
     public static final String NAME_START_FRAME = "Choose Game-Mode";
+    public static final String NAME_GAME_FRAME = "Qwirkle";
 }
