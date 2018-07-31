@@ -26,7 +26,7 @@ public class GamePane extends JPanel {
     }
 
     @Override
-    public void paint(Graphics g) {
+    protected void paintComponent(Graphics g) {
         if (!(g instanceof Graphics2D)) {
             throw new RuntimeException("Expected 2D Graphics Object!");
         }

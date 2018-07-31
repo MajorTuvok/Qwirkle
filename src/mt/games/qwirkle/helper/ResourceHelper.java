@@ -2,14 +2,42 @@ package mt.games.qwirkle.helper;
 
 import com.sun.istack.internal.Nullable;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.*;
+import java.util.function.Function;
 
 public final class ResourceHelper {
+    public static final Function<String, InputStream> EXTERNAL_SUPPLIER = ResourceHelper::getFileStream;
+    public static final Function<String, InputStream> INTERNAL_SUPPLIER = ResourceHelper::getInternalStream;
 
     private ResourceHelper() {
+    }
+
+    public static BufferedImage readInternalImage(String res) {
+        InputStream stream = getInternalStream(res);
+        return imageFromStream(stream);
+    }
+
+    public static BufferedImage readExternalImage(String res) {
+        InputStream stream = getInternalStream(res);
+        return imageFromStream(stream);
+    }
+
+    @Nullable
+    public static BufferedImage imageFromStream(InputStream stream) {
+        if (stream == null) {
+            return null;
+        }
+        try {
+            BufferedImage res = ImageIO.read(stream);
+            if (res != null) {
+                return res;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     @Nullable

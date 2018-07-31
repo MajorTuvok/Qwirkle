@@ -31,4 +31,27 @@ public abstract class GamePiece implements IRenderable {
     public void setColour(ValidColour colour) {
         mColour = colour;
     }
+
+    @Override
+    public int hashCode() {
+        return getColour().hashCode();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o.getClass().equals(this.getClass()))) return false;
+
+        GamePiece gamePiece = (GamePiece) o;
+
+        return getColour() == gamePiece.getColour();
+    }
+
+    @Override
+    public String toString() {
+        return getClass().getSimpleName() + "{" +
+                "mColour=" + mColour +
+                ", mGridPos=" + mGridPos +
+                '}';
+    }
 }
