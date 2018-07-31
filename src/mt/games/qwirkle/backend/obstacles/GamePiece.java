@@ -1,4 +1,13 @@
 package mt.games.qwirkle.backend.obstacles;
 
-public class GamePiece {
+import mt.games.qwirkle.gui.IRendable;
+
+import java.awt.*;
+
+public class GamePiece implements IRendable {
+
+    @Override
+    public void render(Graphics2D graphics2D) {
+
+    }
 }

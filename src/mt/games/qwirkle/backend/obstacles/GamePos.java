@@ -4,8 +4,9 @@ public class GamePos {
     private int x;
     private int y;
 
-    public GamePos(int x) {
+    public GamePos(int x, int y) {
         this.x = x;
+        this.y = y;
     }
 
     public int getX() {
@@ -16,16 +17,37 @@ public class GamePos {
         this.x = x;
     }
 
-    public GamePos(int y) {
-        this.y = y;
-
-    }
-
     public int getY() {
         return y;
     }
 
     public void setY(int y) {
         this.y = y;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getX();
+        result = 31 * result + getY();
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof GamePos)) return false;
+
+        GamePos gamePos = (GamePos) o;
+
+        if (getX() != gamePos.getX()) return false;
+        return getY() == gamePos.getY();
+    }
+
+    @Override
+    public String toString() {
+        return "GamePos{" +
+                "x=" + x +
+                ", y=" + y +
+                '}';
     }
 }
