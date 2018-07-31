@@ -15,8 +15,11 @@ public class MultiplayerDialog extends JDialog {
         setSize(Math.max(width, 0), Math.max(height, 0));
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         mOkButton.addActionListener(e -> {
-            new GameFrame(getWidth(), getHeight()).setVisible(true);
+            new GameFrame(null, getWidth(), getHeight()).setVisible(true);
+            setVisible(false);
+            dispose();
         });
+        mCancelButton.addActionListener(e -> dispose());
         setContentPane(mRootPane);
     }
 }
