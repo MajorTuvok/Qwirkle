@@ -4,7 +4,9 @@ import mt.games.qwirkle.gui.IRendable;
 
 import java.awt.*;
 
-public class GamePiece implements IRendable {
+protected class GamePiece implements IRendable {
+    private char colour;
+
 
     @Override
     public void render(Graphics2D graphics2D) {
