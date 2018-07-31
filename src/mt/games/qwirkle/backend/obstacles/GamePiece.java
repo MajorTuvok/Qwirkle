@@ -1,10 +1,10 @@
 package mt.games.qwirkle.backend.obstacles;
 
-import mt.games.qwirkle.gui.IRendable;
+import mt.games.qwirkle.gui.IRenderable;
 
 import java.awt.*;
 
-public abstract class GamePiece implements IRendable {
+public abstract class GamePiece implements IRenderable {
     private Color mColour;
     private GamePos mGridPos;
 

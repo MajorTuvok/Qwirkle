@@ -8,6 +8,9 @@ public class MultiplyPiece extends GamePiece {
         super(colour);
     }
 
+    public MultiplyPiece(Color colour, GamePos pos) {
+        super(colour, pos);
+    }
 
     @Override
     public void render(Graphics2D graphics2D, int xPos, int yPos, int width, int height) {

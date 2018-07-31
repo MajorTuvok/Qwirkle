@@ -15,6 +15,5 @@ public class ClientGame {
 
     public void setPiece(GamePiece piece) {
         GamePos pos = piece.getPos();
-
     }
 }

@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GamePane extends JPanel {
-    private List<IRendable> mDrawables;
+    private List<IRenderable> mDrawables;
 
     public GamePane() {
         super(true);

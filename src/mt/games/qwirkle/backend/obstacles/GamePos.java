@@ -5,8 +5,8 @@ public class GamePos {
     private int y;
 
     public GamePos(int x, int y) {
-        this.x = x;
-        this.y = y;
+        setX(x);
+        setY(y);
     }
 
     public GamePos(GamePos pos) {
@@ -19,7 +19,7 @@ public class GamePos {
     }
 
     public void setX(int x) {
-        this.x = x;
+        this.x = Math.max(x, 0);
     }
 
     public int getY() {
@@ -27,7 +27,7 @@ public class GamePos {
     }
 
     public void setY(int y) {
-        this.y = y;
+        this.y = Math.max(y, 0);
     }
 
     @Override
