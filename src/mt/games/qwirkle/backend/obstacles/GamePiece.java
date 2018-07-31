@@ -5,7 +5,7 @@ import mt.games.qwirkle.gui.IRendable;
 import java.awt.*;
 
 public class GamePiece implements IRendable {
-    private color mColour;
+    private Color mColour;
 
 
     @Override
