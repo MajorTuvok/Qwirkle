@@ -1,0 +1,11 @@
+# folders
+!/.idea
+!/src
+!/res
+
+# files
+!/.gitignore
+!/README.md
+!/License.md
+!/build.gradle
+!/Qwirkle.iml
