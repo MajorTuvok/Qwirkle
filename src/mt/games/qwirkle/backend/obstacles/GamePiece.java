@@ -4,8 +4,8 @@ import mt.games.qwirkle.gui.IRendable;
 
 import java.awt.*;
 
-protected class GamePiece implements IRendable {
-    private char colour;
+public class GamePiece implements IRendable {
+    private color mColour;
 
 
     @Override
