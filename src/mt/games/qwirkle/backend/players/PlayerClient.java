@@ -1,4 +1,4 @@
 package mt.games.qwirkle.backend.players;
 
-public class PlayerClient {
+public class PlayerClient extends Player {
 }

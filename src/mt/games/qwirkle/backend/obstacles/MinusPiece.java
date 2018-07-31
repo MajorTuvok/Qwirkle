@@ -9,7 +9,7 @@ public class MinusPiece extends GamePiece {
     }
 
     @Override
-    public void render(Graphics2D graphics2D) {
-        super.render(graphics2D);
+    public void render(Graphics2D graphics2D, int xPos, int yPos, int width, int height) {
+
     }
 }

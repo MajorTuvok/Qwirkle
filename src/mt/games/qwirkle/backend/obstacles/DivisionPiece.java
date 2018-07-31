@@ -7,9 +7,10 @@ public class DivisionPiece extends GamePiece {
         super(colour);
     }
 
+
     @Override
-    public void render(Graphics2D graphics2D) {
-        super.render(graphics2D);
+    public void render(Graphics2D graphics2D, int xPos, int yPos, int width, int height) {
+
     }
 }
 

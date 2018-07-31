@@ -1,4 +1,4 @@
 package mt.games.qwirkle.backend;
 
-public class WorldClient {
+public class WorldClient extends World {
 }

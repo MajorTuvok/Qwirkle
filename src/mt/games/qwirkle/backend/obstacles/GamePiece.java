@@ -4,7 +4,7 @@ import mt.games.qwirkle.gui.IRendable;
 
 import java.awt.*;
 
-public class GamePiece implements IRendable {
+public abstract class GamePiece implements IRendable {
     private Color mColour;
     private GamePos mGridPos;
 
@@ -19,10 +19,5 @@ public class GamePiece implements IRendable {
 
     public void setmGridPos(GamePos mGridPos) {
         this.mGridPos = mGridPos;
-    }
-
-    @Override
-    public void render(Graphics2D graphics2D) {
-        
     }
 }
