@@ -7,4 +7,6 @@ public interface Constants {
     public static final String NAME_MULTIPLAYER_DIALOG = "Choose Game-Mode";
     public static final String NAME_START_FRAME = "Choose Game-Mode";
     public static final String NAME_GAME_FRAME = "Qwirkle";
+
+    public static final int GAME_PORT = 27742;
 }
