@@ -15,7 +15,7 @@ public class ServerNetConnector implements IConnector<ServerInetSocketConfig> {
 
     @Override
     @Nullable
-    public IConnection apply(@NotNull ServerInetSocketConfig arg, @NotNull IConnectCallbacks connectCallbacks) {
+    public IConnection apply(@NotNull ServerInetSocketConfig arg, @NotNull IConnectCallbacks<ServerInetSocketConfig> connectCallbacks) {
         try {
             connectCallbacks.onPrepareConnect(this);
 

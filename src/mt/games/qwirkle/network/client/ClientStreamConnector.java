@@ -7,7 +7,7 @@ import mt.games.qwirkle.network.IConnector;
 public class ClientStreamConnector implements IConnector<Object> {
 
     @Override
-    public IConnection apply(Object o, IConnectCallbacks connectCallbacks) {
+    public IConnection apply(Object o, IConnectCallbacks<Object> connectCallbacks) {
         return null;
     }
 

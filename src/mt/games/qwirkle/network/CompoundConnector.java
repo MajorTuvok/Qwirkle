@@ -19,7 +19,7 @@ public class CompoundConnector<T> implements IConnector<T> {
 
     @Override
     @Nullable
-    public IConnection apply(@Nullable T t, IConnectCallbacks connectCallbacks) {
+    public IConnection apply(@Nullable T t, IConnectCallbacks<T> connectCallbacks) {
         for (int i = 0; i < mConnectors.size(); --i) {
             IConnector<T> connector = mConnectors.get(i);
             if (!connector.canConnect()) {

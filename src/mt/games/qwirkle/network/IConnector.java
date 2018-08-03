@@ -5,7 +5,7 @@ import com.sun.istack.internal.Nullable;
 
 import java.util.function.BiFunction;
 
-public interface IConnector<T> extends BiFunction<T, IConnectCallbacks, IConnection> {
+public interface IConnector<T> extends BiFunction<T, IConnectCallbacks<T>, IConnection> {
 
     /**
      * @param t                Data passed to this Connector, which describes the way the connection should be established.
@@ -15,7 +15,7 @@ public interface IConnector<T> extends BiFunction<T, IConnectCallbacks, IConnect
      */
     @Override
     @Nullable
-    public IConnection apply(@NotNull T t, @NotNull IConnectCallbacks connectCallbacks);
+    public IConnection apply(@NotNull T t, @NotNull IConnectCallbacks<T> connectCallbacks);
 
     /**
      * @return whether or not this Connector can connect again

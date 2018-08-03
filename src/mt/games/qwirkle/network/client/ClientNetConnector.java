@@ -16,7 +16,7 @@ import java.net.UnknownHostException;
 public class ClientNetConnector implements IConnector<ClientInetSocketConfig> {
     @Override
     @Nullable
-    public IConnection apply(@NotNull ClientInetSocketConfig arg, @NotNull IConnectCallbacks callbacks) {
+    public IConnection apply(@NotNull ClientInetSocketConfig arg, @NotNull IConnectCallbacks<ClientInetSocketConfig> callbacks) {
         try {
             callbacks.onPrepareConnect(this);
 
