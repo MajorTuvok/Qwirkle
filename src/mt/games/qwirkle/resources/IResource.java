@@ -2,4 +2,6 @@ package mt.games.qwirkle.resources;
 
 public interface IResource {
     public void load(String id);
+
+    public String getIdentifier();
 }

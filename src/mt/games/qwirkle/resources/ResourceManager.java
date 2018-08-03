@@ -26,7 +26,11 @@ public enum ResourceManager {
 
     public void load() {
         for (Map.Entry<String, IResource> entry : mResourceMap.entrySet()) {
-            entry.getValue().load(entry.getKey());
+            try {
+                entry.getValue().load(entry.getKey());
+            } catch (Exception e) {
+                throw new ResourceException("Resource threw an exception, aborting loading!", entry.getKey(), entry.getValue().getIdentifier(), e);
+            }
         }
     }
 }

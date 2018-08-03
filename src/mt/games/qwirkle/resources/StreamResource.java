@@ -19,6 +19,7 @@ public abstract class StreamResource implements IResource {
         mStreamSupplier = streamSupplier;
     }
 
+    @Override
     public String getIdentifier() {
         return mIdentifier;
     }
