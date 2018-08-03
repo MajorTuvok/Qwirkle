@@ -4,11 +4,11 @@ import java.awt.*;
 
 public class MinusPiece extends GamePiece {
 
-    public MinusPiece(Colours colour) {
+    public MinusPiece(ValidColour colour) {
         super(colour);
     }
 
-    public MinusPiece(Colours colour, GamePos pos) {
+    public MinusPiece(ValidColour colour, GamePos pos) {
         super(colour, pos);
     }
 

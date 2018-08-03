@@ -3,11 +3,11 @@ package mt.games.qwirkle.backend.obstacles;
 import java.awt.*;
 
 public class SquarerootPiece extends GamePiece {
-    public SquarerootPiece(Colours colour) {
+    public SquarerootPiece(ValidColour colour) {
         super(colour);
     }
 
-    public SquarerootPiece(Colours colour, GamePos pos) {
+    public SquarerootPiece(ValidColour colour, GamePos pos) {
         super(colour, pos);
     }
 
