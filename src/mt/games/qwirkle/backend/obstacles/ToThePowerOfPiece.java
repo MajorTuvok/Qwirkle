@@ -16,6 +16,6 @@ public class ToThePowerOfPiece extends GamePiece {
 
     @Override
     public void render(Graphics2D graphics2D, int xPos, int yPos, int width, int height) {
-        graphics2D.drawImage(((ImageResource) ResourceManager.INSTANCE.findResourceFor("x^2_" + getColour().name())).getImage().getImage(), xPos, yPos, width, height, null);
+        graphics2D.drawImage(((ImageResource) ResourceManager.INSTANCE.findResourceFor("x^2_" + getColour().name())).getImageWrapper().getImage(), xPos, yPos, width, height, null);
     }
 }

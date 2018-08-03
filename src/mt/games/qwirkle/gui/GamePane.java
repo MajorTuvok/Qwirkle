@@ -45,7 +45,7 @@ public class GamePane extends JPanel {
             List<IRenderable> row = mDrawables.get(i);
             int pW = (int) Math.round(MathHelper.clamp(w / (double) row.size(), 32, 128));
             for (int j = 0; j < row.size(); j++) {
-                row.get(j).render(graphics2D, x + pW * i, y, pW, pH);
+                row.get(j).render(graphics2D, x + pW * j, y + pH * i, pW, pH);
             }
         }
     }

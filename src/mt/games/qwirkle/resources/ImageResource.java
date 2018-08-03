@@ -15,11 +15,11 @@ public class ImageResource extends StreamResource {
         super(identifier, streamSupplier);
     }
 
-    public ImageWrapper getImage() {
+    public ImageWrapper getImageWrapper() {
         return mImageWrapper;
     }
 
-    protected void setImage(ImageWrapper image) {
+    protected void setImageWrapper(ImageWrapper image) {
         mImageWrapper = image;
     }
 
@@ -32,7 +32,7 @@ public class ImageResource extends StreamResource {
                     throw new ResourceNotFoundException(id, getIdentifier());
                 }
                 BufferedImage img = loadImage(id, stream);
-                setImage(new ImageWrapper(img.getWidth(), img.getHeight(), img));
+                setImageWrapper(new ImageWrapper(img.getWidth(), img.getHeight(), img));
             } finally {
                 if (stream != null) {
                     try {

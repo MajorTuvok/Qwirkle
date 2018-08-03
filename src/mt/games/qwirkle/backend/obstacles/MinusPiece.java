@@ -17,6 +17,8 @@ public class MinusPiece extends GamePiece {
 
     @Override
     public void render(Graphics2D graphics2D, int xPos, int yPos, int width, int height) {
-        graphics2D.drawImage(((ImageResource) ResourceManager.INSTANCE.findResourceFor("minus_" + getColour().name())).getImage().getImage(), xPos, yPos, width, height, null);
+        ImageResource res = (ImageResource) ResourceManager.INSTANCE.findResourceFor("minus_" + getColour().name());
+        Image img = res.getImageWrapper().getImage();
+        graphics2D.drawImage(img, xPos, yPos, width, height, null);
     }
 }

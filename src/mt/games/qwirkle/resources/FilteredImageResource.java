@@ -4,6 +4,7 @@ import com.sun.istack.internal.NotNull;
 
 import java.awt.*;
 import java.awt.image.FilteredImageSource;
+import java.awt.image.ImageProducer;
 import java.awt.image.RGBImageFilter;
 import java.io.InputStream;
 import java.util.Objects;
@@ -20,9 +21,11 @@ public class FilteredImageResource extends ImageResource {
     @Override
     public void load(String id) {
         super.load(id);
-        if (getImage() != null) {
-            Image filtered = Toolkit.getDefaultToolkit().createImage(new FilteredImageSource(getImage().getImage().getSource(), mColorFilter));
-            setImage(new ImageWrapper(getImage().getXSize(), getImage().getYSize(), filtered));
+        if (getImageWrapper() != null) {
+            ImageWrapper curImageWrapper = getImageWrapper();
+            ImageProducer prod = curImageWrapper.getImage().getSource();
+            Image filtered = Toolkit.getDefaultToolkit().createImage(new FilteredImageSource(prod, mColorFilter));
+            setImageWrapper(new ImageWrapper(curImageWrapper.getXSize(), curImageWrapper.getYSize(), filtered));
         }
     }
 
@@ -37,25 +40,27 @@ public class FilteredImageResource extends ImageResource {
         }
 
         public ColorFilter(float alpha, float red, float green, float blue) {
+            super();
             mAlpha = alpha;
             mRed = red;
             mGreen = green;
             mBlue = blue;
+            canFilterIndexColorModel = true;
         }
 
         @Override
-        public int filterRGB(int x, int y, int rgb) {
-            int alpha = (byte) ((rgb & 0xff000000) >> 24);
-            int red = (byte) ((rgb & 0xff0000) >> 16);
-            int green = (byte) ((rgb & 0xff00) >> 8);
-            int blue = (byte) (rgb & 0xff);
+        public int filterRGB(int x, int y, int argb) {
+            int red = (argb) & 0xFF;
+            int green = (argb >> 8) & 0xFF;
+            int blue = (argb >> 16) & 0xFF;
+            int alpha = (argb >> 24) & 0xFF;
 
             alpha = (Math.round(mAlpha * (alpha / 255f)) * 255);
             red = (Math.round(mRed * (red / 255f)) * 255);
             green = (Math.round(mGreen * (green / 255f)) * 255);
             blue = (Math.round(mBlue * (blue / 255f)) * 255);
 
-            return (alpha << 24) & (red << 16) & (green << 8) & blue;
+            return (alpha << 24) | (red << 16) | (green << 8) | blue;
         }
     }
 }
