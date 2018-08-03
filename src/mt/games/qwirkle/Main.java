@@ -1,5 +1,6 @@
 package mt.games.qwirkle;
 
+import mt.games.qwirkle.backend.obstacles.ValidColour;
 import mt.games.qwirkle.gui.StartFrame;
 import mt.games.qwirkle.helper.Constants;
 import mt.games.qwirkle.helper.ResourceHelper;
@@ -7,6 +8,7 @@ import mt.games.qwirkle.network.IConnectCallbacks;
 import mt.games.qwirkle.network.IConnector;
 import mt.games.qwirkle.network.client.ClientInetSocketConfig;
 import mt.games.qwirkle.network.client.ClientNetConnector;
+import mt.games.qwirkle.resources.FilteredImageResource;
 import mt.games.qwirkle.resources.ResourceManager;
 
 import java.io.IOException;
@@ -24,28 +26,33 @@ public class Main {
     private static void registerResources() {
         ServerMain.registerResources();
         ResourceManager mang = ResourceManager.INSTANCE;
+        for (ValidColour color : ValidColour.values()) {
+            if (color == ValidColour.NONE) continue;
+            mang.addResource("plus_" + color.name(), new FilteredImageResource(color.getColor(), "plus.png", ResourceHelper.INTERNAL_SUPPLIER));
+            mang.addResource("minus_" + color.name(), new FilteredImageResource(color.getColor(), "minus.png", ResourceHelper.INTERNAL_SUPPLIER));
+        }
     }
 
     private static void connectTest() {
         try {
-            new ClientNetConnector().apply(new ClientInetSocketConfig("localhost", Constants.GAME_PORT), new IConnectCallbacks() {
+            new ClientNetConnector().apply(new ClientInetSocketConfig("localhost", Constants.GAME_PORT), new IConnectCallbacks<ClientInetSocketConfig>() {
                 @Override
-                public void onPrepareConnect(IConnector<?> connector) {
+                public void onPrepareConnect(IConnector<ClientInetSocketConfig> connector) {
                     System.out.println("Client prepare connect");
                 }
 
                 @Override
-                public void onTryConnect(IConnector<?> connector) {
+                public void onTryConnect(IConnector<ClientInetSocketConfig> connector) {
                     System.out.println("Client try connect");
                 }
 
                 @Override
-                public void onConnected(IConnector<?> connector) {
+                public void onConnected(IConnector<ClientInetSocketConfig> connector) {
                     System.out.println("Client connected");
                 }
 
                 @Override
-                public void onConnectFailed(IConnector<?> connector, Exception cause) {
+                public void onConnectFailed(IConnector<ClientInetSocketConfig> connector, Exception cause) {
                     System.err.println("Client failed to connect because of " + cause.getClass().getName());
                 }
             }).close();

@@ -22,24 +22,24 @@ public class ServerMain {
 
     private static void connectTest() {
         try {
-            new ServerNetConnector().apply(new ServerInetSocketConfig(Constants.GAME_PORT), new IConnectCallbacks() {
+            new ServerNetConnector().apply(new ServerInetSocketConfig(Constants.GAME_PORT), new IConnectCallbacks<ServerInetSocketConfig>() {
                 @Override
-                public void onPrepareConnect(IConnector<?> connector) {
+                public void onPrepareConnect(IConnector<ServerInetSocketConfig> connector) {
                     System.out.println("Server prepare connect");
                 }
 
                 @Override
-                public void onTryConnect(IConnector<?> connector) {
+                public void onTryConnect(IConnector<ServerInetSocketConfig> connector) {
                     System.out.println("Server try connect");
                 }
 
                 @Override
-                public void onConnected(IConnector<?> connector) {
+                public void onConnected(IConnector<ServerInetSocketConfig> connector) {
                     System.out.println("Server connected");
                 }
 
                 @Override
-                public void onConnectFailed(IConnector<?> connector, Exception cause) {
+                public void onConnectFailed(IConnector<ServerInetSocketConfig> connector, Exception cause) {
                     System.err.println("Server failed to connect because of " + cause.getClass().getName());
                 }
             }).close();
