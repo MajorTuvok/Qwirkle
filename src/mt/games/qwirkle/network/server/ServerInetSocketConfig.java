@@ -5,7 +5,7 @@ import mt.games.qwirkle.network.InetSocketConfig;
 
 import java.net.InetAddress;
 
-public class ServerInetSocketConfig extends InetSocketConfig {
+public final class ServerInetSocketConfig extends InetSocketConfig {
     private final int mBacklog;
     private final InetAddress mBindAddress;
 

@@ -4,7 +4,7 @@ import mt.games.qwirkle.network.InetSocketConfig;
 
 import java.util.Objects;
 
-public class ClientInetSocketConfig extends InetSocketConfig {
+public final class ClientInetSocketConfig extends InetSocketConfig {
     private final String mName;
 
     public ClientInetSocketConfig(String name, int port) {
