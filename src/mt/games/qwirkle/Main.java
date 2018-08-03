@@ -30,6 +30,10 @@ public class Main {
             if (color == ValidColour.NONE) continue;
             mang.addResource("plus_" + color.name(), new FilteredImageResource(color.getColor(), "plus.png", ResourceHelper.INTERNAL_SUPPLIER));
             mang.addResource("minus_" + color.name(), new FilteredImageResource(color.getColor(), "minus.png", ResourceHelper.INTERNAL_SUPPLIER));
+            mang.addResource("multiply_" + color.name(), new FilteredImageResource(color.getColor(), "multiply.png", ResourceHelper.INTERNAL_SUPPLIER));
+            mang.addResource("division_" + color.name(), new FilteredImageResource(color.getColor(), "division.png", ResourceHelper.INTERNAL_SUPPLIER));
+            mang.addResource("sqrt_" + color.name(), new FilteredImageResource(color.getColor(), "sqrt.png", ResourceHelper.INTERNAL_SUPPLIER));
+            mang.addResource("x^2_" + color.name(), new FilteredImageResource(color.getColor(), "x^2.png", ResourceHelper.INTERNAL_SUPPLIER));
         }
     }
 
