@@ -1,7 +1,6 @@
 package mt.games.qwirkle.gui;
 
-import mt.games.qwirkle.backend.obstacles.PlusPiece;
-import mt.games.qwirkle.backend.obstacles.ValidColour;
+import mt.games.qwirkle.backend.obstacles.*;
 import mt.games.qwirkle.helper.MathHelper;
 
 import javax.swing.*;
@@ -21,6 +20,11 @@ public class GamePane extends JPanel {
             }
             List<IRenderable> row = new ArrayList<>();
             row.add(new PlusPiece(color));
+            row.add(new MinusPiece(color));
+            row.add(new MultiplyPiece(color));
+            row.add(new DivisionPiece(color));
+            row.add(new ToThePowerOfPiece(color));
+            row.add(new SquarerootPiece(color));
             mDrawables.add(row);
         }
     }
