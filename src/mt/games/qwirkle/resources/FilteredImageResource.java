@@ -30,16 +30,16 @@ public class FilteredImageResource extends ImageResource {
     }
 
     public static class ColorFilter extends RGBImageFilter {
-        private final float mAlpha;
-        private final float mBlue;
-        private final float mGreen;
-        private final float mRed;
+        private final int mAlpha;
+        private final int mBlue;
+        private final int mGreen;
+        private final int mRed;
 
         public ColorFilter(@NotNull Color color) {
-            this(color.getAlpha() / 255f, color.getRed() / 255f, color.getGreen() / 255f, color.getBlue() / 255f);
+            this(color.getAlpha(), color.getRed(), color.getGreen(), color.getBlue());
         }
 
-        public ColorFilter(float alpha, float red, float green, float blue) {
+        public ColorFilter(int alpha, int red, int green, int blue) {
             super();
             mAlpha = alpha;
             mRed = red;
@@ -49,18 +49,18 @@ public class FilteredImageResource extends ImageResource {
         }
 
         @Override
-        public int filterRGB(int x, int y, int argb) {
-            int red = (argb) & 0xFF;
-            int green = (argb >> 8) & 0xFF;
-            int blue = (argb >> 16) & 0xFF;
-            int alpha = (argb >> 24) & 0xFF;
+        public int filterRGB(int x, int y, int rgba) {
+            int red = (rgba) & 0xFF;
+            int green = (rgba >> 8) & 0xFF;
+            int blue = (rgba >> 16) & 0xFF;
+            int alpha = (rgba >> 24) & 0xFF;
 
-            alpha = (Math.round(mAlpha * (alpha / 255f)) * 255);
-            red = (Math.round(mRed * (red / 255f)) * 255);
-            green = (Math.round(mGreen * (green / 255f)) * 255);
-            blue = (Math.round(mBlue * (blue / 255f)) * 255);
+            red = Math.round(mRed * red / 255f);
+            green = Math.round(mGreen * green / 255f);
+            blue = Math.round(mBlue * blue / 255f);
+            alpha = Math.round(mAlpha * alpha / 255f);
 
-            return (alpha << 24) | (red << 16) | (green << 8) | blue;
+            return red | (green << 8) | (blue << 16) | (alpha << 24);
         }
     }
 }
