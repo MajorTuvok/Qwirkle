@@ -11,16 +11,21 @@ public class ClientStreamConnector implements IConnector<StreamConfig> {
 
     @Override
     public IConnection apply(StreamConfig o, IConnectCallbacks<StreamConfig> connectCallbacks) {
+        connectCallbacks.onPrepareConnect(this);
         PipedInputStream streamIn = new PipedInputStream();
         PipedOutputStream streamOut = new PipedOutputStream();
+        connectCallbacks.onTryConnect(this);
         try {
             o.connectTo(streamIn, streamOut);
         } catch (IOException e) {
+            connectCallbacks.onConnectFailed(this, e);
             e.printStackTrace();
             return null;
-        } catch (IllegalStateException e) {
+        } catch (Exception e) {
+            connectCallbacks.onConnectFailed(this, e);
             throw new RuntimeException("Cannot connect to already used StreamConfig!", e);
         }
+        connectCallbacks.onConnected(this);
         return new IConnection() {
             @Override
             public InputStream getInputStream() {

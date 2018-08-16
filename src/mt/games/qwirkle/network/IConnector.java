@@ -11,7 +11,7 @@ public interface IConnector<T> extends BiFunction<T, IConnectCallbacks<T>, IConn
      * @param t                Data passed to this Connector, which describes the way the connection should be established.
      * @param connectCallbacks The callbacks to inform about connect Progress. All Callbacks have to be called in order.
      * @return An InputStream allowing Data Transfer via the connection
-     * @throws {@link UnsupportedOperationException} if canConnect would return true because no further connection can be created.
+     * @throws UnsupportedOperationException if {@link #canConnect} would return true because no further connection can be created.
      */
     @Override
     @Nullable

@@ -19,7 +19,7 @@ public class GamePos {
     }
 
     public void setX(int x) {
-        this.x = Math.max(x, 0);
+        this.x = x;
     }
 
     public int getY() {
@@ -27,14 +27,13 @@ public class GamePos {
     }
 
     public void setY(int y) {
-        this.y = Math.max(y, 0);
+        this.y = y;
     }
 
     @Override
     public int hashCode() {
         int result = getX();
-        result = 31 * result + getY();
-        return result;
+        return 31 * result + getY();
     }
 
     @Override
