@@ -23,7 +23,7 @@ public abstract class ConnectEvent<T, V> {
     public static abstract class PrepareConnectEvent<T, V> extends ConnectEvent<T, V> {
         @Nonnull
         public static <CONF, DAT> PrepareConnectEvent<CONF, DAT> newInstance(@Nonnull final ConnectionManager<CONF, DAT> manager, @Nonnull CONF configObject) {
-            return new AutoValue_ConnectEvent_PrepareConnectEvent(manager, configObject);
+            return new AutoValue_ConnectEvent_PrepareConnectEvent<>(manager, configObject);
         }
     }
 
@@ -33,7 +33,7 @@ public abstract class ConnectEvent<T, V> {
     public static abstract class TryConnectEvent<T, V> extends ConnectEvent<T, V> {
         @Nonnull
         public static <CONF, DAT> TryConnectEvent<CONF, DAT> newInstance(@Nonnull final ConnectionManager<CONF, DAT> manager, @Nonnull final CONF configObject) {
-            return new AutoValue_ConnectEvent_TryConnectEvent(manager, configObject);
+            return new AutoValue_ConnectEvent_TryConnectEvent<>(manager, configObject);
         }
     }
 
@@ -43,7 +43,7 @@ public abstract class ConnectEvent<T, V> {
 
         @Nonnull
         public static <CONF, DAT> ConnectedEvent<CONF, DAT> newInstance(@Nonnull final ConnectionManager<CONF, DAT> manager, @Nonnull final CONF configObject, @Nonnull final IConnection connection) {
-            return new AutoValue_ConnectEvent_ConnectedEvent(manager, configObject, connection);
+            return new AutoValue_ConnectEvent_ConnectedEvent<>(manager, configObject, connection);
         }
 
         public void setAllowConnection(boolean allowConnection) {
@@ -64,7 +64,7 @@ public abstract class ConnectEvent<T, V> {
 
         @Nonnull
         public static <CONF, DAT> ConnectFailedEvent<CONF, DAT> newInstance(@Nonnull final ConnectionManager<CONF, DAT> manager, @Nonnull final CONF configObject, @Nullable final Exception exception) {
-            return new AutoValue_ConnectEvent_ConnectFailedEvent(manager, configObject, exception);
+            return new AutoValue_ConnectEvent_ConnectFailedEvent<>(manager, configObject, exception);
         }
 
         public void setRethrow(boolean rethrow) {

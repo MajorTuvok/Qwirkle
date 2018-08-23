@@ -31,6 +31,8 @@ public abstract class InetSocketConfig {
     public abstract static class Builder<T extends Builder<T>> {
         public abstract T setPort(int newPort);
 
+        protected abstract int getPort();
+
         public abstract T setReceiveBufferSize(int newReceiveBufferSize);
 
         public abstract T setSendBufferSize(int newSendBufferSize);
@@ -46,5 +48,11 @@ public abstract class InetSocketConfig {
         public abstract T setReuseAddress(boolean newReuseAddress);
 
         public abstract T setSoTimeout(int newSoTimeout);
+
+        public void validateValues() {
+            if (getPort() < 0 || getPort() > 65535) {
+                throw new IllegalArgumentException("Cannot have port Number " + getPort() + "! Valid range is [0,65535]!");
+            }
+        }
     }
 }

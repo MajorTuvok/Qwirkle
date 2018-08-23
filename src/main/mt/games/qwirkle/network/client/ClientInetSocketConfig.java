@@ -10,8 +10,24 @@ import mt.games.qwirkle.network.InetSocketConfig;
 @CopyAnnotations
 public abstract class ClientInetSocketConfig extends InetSocketConfig {
 
-    public static Builder builder() {
-        return new AutoValue_ClientInetSocketConfig.Builder();
+    public static ClientInetSocketConfig create(String name, int port) {
+        return builder(name, port).build();
+    }
+
+    public static ClientInetSocketConfig.Builder builder(String name, int port) {
+        return builder().setPort(port).setName(name);
+    }
+
+    public static ClientInetSocketConfig.Builder builder() {
+        return new AutoValue_ClientInetSocketConfig.Builder()
+                .setReceiveBufferSize(-1)
+                .setSendBufferSize(-1)
+                .setConnectionTime(Integer.MIN_VALUE)
+                .setBandwidth(Integer.MIN_VALUE)
+                .setLatency(Integer.MIN_VALUE)
+                .setOOBInLine(false)
+                .setReuseAddress(false)
+                .setSoTimeout(-1);
     }
 
     public abstract String getName();
@@ -20,8 +36,13 @@ public abstract class ClientInetSocketConfig extends InetSocketConfig {
     @CopyAnnotations
     public static abstract class Builder extends InetSocketConfig.Builder<Builder> {
 
-        public abstract Builder setName(String newName);
+        abstract Builder setName(String newName);
 
-        public abstract ClientInetSocketConfig build();
+        public ClientInetSocketConfig build() {
+            validateValues();
+            return autoBuild();
+        }
+
+        abstract ClientInetSocketConfig autoBuild();
     }
 }
