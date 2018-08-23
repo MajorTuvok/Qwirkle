@@ -1,0 +1,66 @@
+import java.nio.file.Files
+import java.nio.file.Paths
+import java.nio.file.Path
+import java.nio.file.StandardCopyOption
+
+apply plugin: 'java-library'
+apply plugin: 'java'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    api                 "com.google.guava:guava:26.0-jre"
+    api                 "com.google.auto.value:auto-value-annotations:1.6.2"
+    annotationProcessor "com.google.auto.value:auto-value:1.6.2"
+}
+
+sourceSets {
+    main {
+        java {
+            srcDirs = ['src/main']
+        }
+        resources {
+            srcDirs = ['res/main']
+        }
+    }
+    test {
+        java {
+            srcDirs = ['src/test']
+        }
+        resources {
+            srcDirs = ['res/test']
+        }
+    }
+}
+
+compileJava.doLast { //this will copy the generated AutoValue files into the src directory
+    String workDir = buildDir.getParent()
+    String mainJavaBuildDir = workDir+'/build/classes/java/main'
+    String mainJavaSrcDir = workDir+'/src/main'
+    new File(mainJavaBuildDir).traverse {
+        if(!it.name.startsWith('AutoValue_'))
+            return
+        if(!it.name.endsWith('.java'))
+            return
+        Path asPath = it.toPath();
+        Path packagePath = Paths.get(mainJavaBuildDir).relativize(asPath)
+        Path res = Paths.get(mainJavaSrcDir).resolve(packagePath)
+        Files.copy(asPath,res, StandardCopyOption.REPLACE_EXISTING)
+        println 'Found AutoValue-Generated file ('+it+') copied it to '+res
+    }
+}
+
+compileJava.doFirst {  //this ensures, that the previously generated AutoValue files are deleted
+    String workDir = buildDir.getParent()
+    String mainJavaSrcDir = workDir+'/src/main'
+    new File(mainJavaSrcDir).traverse {
+        if(!it.name.startsWith('AutoValue_'))
+            return
+        if(!it.name.endsWith('.java'))
+            return
+        Files.delete(it.toPath())
+        println 'Deleted AutoValue-File: '+it
+    }
+}
