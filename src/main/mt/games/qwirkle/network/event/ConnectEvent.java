@@ -60,7 +60,11 @@ public abstract class ConnectEvent<T, V> {
 
     @AutoValue
     public static abstract class ConnectFailedEvent<T, V> extends ConnectEvent<T, V> {
-        private boolean mRethrow = false;
+        private boolean mRethrow;
+
+        ConnectFailedEvent() {
+            mRethrow = false;
+        }
 
         @Nonnull
         public static <CONF, DAT> ConnectFailedEvent<CONF, DAT> newInstance(@Nonnull final ConnectionManager<CONF, DAT> manager, @Nonnull final CONF configObject, @Nullable final Exception exception) {

@@ -1,6 +1,11 @@
 package mt.games.qwirkle;
 
+import mt.games.qwirkle.helper.Constants;
 import mt.games.qwirkle.helper.ResourceHelper;
+import mt.games.qwirkle.network.IConnection;
+import mt.games.qwirkle.network.IConnector;
+import mt.games.qwirkle.network.server.ServerInetSocketConfig;
+import mt.games.qwirkle.network.server.ServerNetConnector;
 import mt.games.qwirkle.resources.PropertiesResource;
 import mt.games.qwirkle.resources.ResourceManager;
 
@@ -16,30 +21,20 @@ public class ServerMain {
     }
 
     private static void connectTest() {
-        /*try {
-            new ServerNetConnector().connect(new ServerInetSocketConfig(Constants.GAME_PORT), new IConnectCallbacks<ServerInetSocketConfig>() {
-                @Override
-                public void onPrepareConnect(IConnector<ServerInetSocketConfig> connector) {
-                    System.out.println("Server prepare connect");
-                }
-
-                @Override
-                public void onTryConnect(IConnector<ServerInetSocketConfig> connector) {
-                    System.out.println("Server try connect");
-                }
-
-                @Override
-                public void onConnected(IConnector<ServerInetSocketConfig> connector) {
-                    System.out.println("Server connected");
-                }
-
-                @Override
-                public void onConnectFailed(IConnector<ServerInetSocketConfig> connector, Exception cause) {
-                    System.err.println("Server failed to connect because of " + cause.getClass().getName());
-                }
-            }).close();
+        try {
+            handleConnect(new ServerNetConnector(), ServerInetSocketConfig.create(Constants.GAME_PORT)).close();
         } catch (Exception e) {
+            System.err.println("Server failed to connect!");
             e.printStackTrace();
-        }*/
+        }
+    }
+
+    private static <T, D> IConnection handleConnect(IConnector<T, D> connector, T data) throws Exception {
+        System.out.println("Prepare Server connect");
+        D intermediateRes = connector.prepareConnect(data);
+        System.out.println("Try Server connect");
+        IConnection res = connector.tryConnect(data, intermediateRes);
+        System.out.println("Server connected successfully");
+        return res;
     }
 }

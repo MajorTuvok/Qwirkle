@@ -7,13 +7,23 @@ apply plugin: 'java-library'
 apply plugin: 'java'
 
 repositories {
+    flatDir dirs:"lib"
     mavenCentral()
 }
 
+configurations {
+    antTask
+}
+
 dependencies {
-    api                 "com.google.guava:guava:26.0-jre"
-    api                 "com.google.auto.value:auto-value-annotations:1.6.2"
+    implementation      "com.google.guava:guava:26.0-jre"
+    implementation      "com.google.auto.value:auto-value-annotations:1.6.2"
+    api name:'forms_rt' //Apparently IntelliJ copies this into the output jar everytime someone uses the UIDesigner - without that I can't compile with my workaround
     annotationProcessor "com.google.auto.value:auto-value:1.6.2"
+    antTask name: 'javac2'
+    antTask name: 'forms_rt'
+    antTask name: 'asm-all'
+    antTask name: 'jdom'
 }
 
 sourceSets {
@@ -34,9 +44,22 @@ sourceSets {
         }
     }
 }
-
-compileJava.doLast { //this will copy the generated AutoValue files into the src directory
+void deleteAutoValueFiles() {
     String workDir = buildDir.getParent()
+    String mainJavaSrcDir = workDir+'/src/main'
+    println gradle.gradleHomeDir
+    new File(mainJavaSrcDir).traverse {
+        if(!it.name.startsWith('AutoValue_'))
+            return
+        if(!it.name.endsWith('.java'))
+            return
+        Files.delete(it.toPath())
+        println 'Deleted AutoValue-File: '+it
+    }
+}
+
+void copyAutoValueFiles() {
+    String workDir = rootDir.toString()
     String mainJavaBuildDir = workDir+'/build/classes/java/main'
     String mainJavaSrcDir = workDir+'/src/main'
     new File(mainJavaBuildDir).traverse {
@@ -52,15 +75,92 @@ compileJava.doLast { //this will copy the generated AutoValue files into the src
     }
 }
 
+
+
+compileJava.doLast { //this will copy the generated AutoValue files into the src directory
+    copyAutoValueFiles()
+}
+
 compileJava.doFirst {  //this ensures, that the previously generated AutoValue files are deleted
-    String workDir = buildDir.getParent()
-    String mainJavaSrcDir = workDir+'/src/main'
-    new File(mainJavaSrcDir).traverse {
-        if(!it.name.startsWith('AutoValue_'))
-            return
-        if(!it.name.endsWith('.java'))
-            return
-        Files.delete(it.toPath())
-        println 'Deleted AutoValue-File: '+it
+    deleteAutoValueFiles()
+}
+
+//Copied from https://www.grahamedgecombe.com/blog/2013/04/03/using-intellij-ideas-javac2-in-gradle. Thanks dude
+task compileJava(overwrite: true, dependsOn: configurations.compile.getTaskDependencyFromProjectDependency(true, 'jar')) {
+    doLast {
+        project.sourceSets.main.output.classesDir.mkdirs()
+        ant.taskdef name: 'javac2', classname: 'com.intellij.ant.Javac2', classpath: configurations.antTask.asPath
+        ant.javac2 srcdir: project.sourceSets.main.java.srcDirs.join(':'),
+                classpath: project.sourceSets.main.compileClasspath.asPath,
+                destdir: project.sourceSets.main.output.classesDir,
+                source: sourceCompatibility,
+                target: targetCompatibility,
+                includeAntRuntime: false
+    }
+}
+
+class IntelliJDependencyCopyService extends DefaultTask {
+    List<String> dependenciesToCopy
+    List<String> possibleJetBrainsDir = Arrays.asList("C:\\Program Files\\JetBrains\\")
+    @TaskAction
+    void copyDeps() {
+        Path intelliJHome = getIntelliJHome()
+        if (intelliJHome == null)
+            throw new RuntimeException("Could not resolve IntelliJ Home! Directory not found!")
+
+        Path libs = intelliJHome.resolve("lib")
+        if (!Files.exists(libs))
+            throw new RuntimeException("Could not resolve IntelliJ lib directory! Assumed direcotry ("+libs+") apperently doesn't exist!")
+        Path projectLib = project.rootDir.toPath().resolve("lib")
+        if (!Files.exists(projectLib))
+            Files.createDirectories(projectLib)
+        performCopy(libs,projectLib)
+    }
+
+    private void performCopy(Path libs, Path projectLib) {
+        println "Using "+libs+" as src Directory"
+        println "Using "+projectLib+" as dest Directory"
+        for(String s:dependenciesToCopy) {
+            println "Copying "+s
+            Files.copy(libs.resolve(s),projectLib.resolve(s),StandardCopyOption.REPLACE_EXISTING)
+        }
+    }
+
+    private Path getIntelliJHome() {
+        List<Path> directories = new ArrayList<>()
+        for(String s:possibleJetBrainsDir) {
+            Path assumedDir = Paths.get(s)
+            if (!Files.exists(assumedDir)) {
+                println("Cannot resolve JetBrains dir(${s})!")
+                continue
+            }
+            assumedDir.eachDir {
+                println "Found possible dir: "+it+"; name="+it.fileName
+                if (it.fileName.toString().startsWith("IntelliJ")) {
+                    println it.toString()+" seems to be a valid IntelliJ directory"
+                    directories.add(it)
+                }
+            }
+
+        }
+        if (directories.size()>1)
+            throw new RuntimeException("Found more than 1 IntelliJ installation!")
+        if (directories.size() == 1)
+            return directories.get(0)
+        return null
+    }
+}
+
+task copyLayoutEditorDeps (type:IntelliJDependencyCopyService){
+    group 'Qwirkle'
+    description 'Tries to copy the Dependencies required to run javac2 (which in turn is required for the IntelliJ layout editor).'
+    dependenciesToCopy = ((List<String>)Arrays.asList("javac2.jar","forms_rt.jar","asm-all.jar","jdom.jar"))
+}
+
+task recopyAutoValueFiles {
+    group 'Qwirkle'
+    description 'This will copy the generated AutoValue Files back into the src directories. Useful if lost after a failed build.'
+    doLast {
+        copyAutoValueFiles()
     }
 }

@@ -2,7 +2,12 @@ package mt.games.qwirkle;
 
 import mt.games.qwirkle.backend.obstacles.ValidColour;
 import mt.games.qwirkle.gui.StartFrame;
+import mt.games.qwirkle.helper.Constants;
 import mt.games.qwirkle.helper.ResourceHelper;
+import mt.games.qwirkle.network.IConnection;
+import mt.games.qwirkle.network.IConnector;
+import mt.games.qwirkle.network.client.ClientInetSocketConfig;
+import mt.games.qwirkle.network.client.ClientNetConnector;
 import mt.games.qwirkle.resources.FilteredImageResource;
 import mt.games.qwirkle.resources.ResourceManager;
 
@@ -33,31 +38,21 @@ public class Main {
     }
 
     private static void connectTest() {
-        /*try {
-            new ClientNetConnector().connect(new ClientInetSocketConfig("localhost", Constants.GAME_PORT), new IConnectCallbacks<ClientInetSocketConfig>() {
-                @Override
-                public void onPrepareConnect(IConnector<ClientInetSocketConfig> connector) {
-                    System.out.println("Client prepare connect");
-                }
-
-                @Override
-                public void onTryConnect(IConnector<ClientInetSocketConfig> connector) {
-                    System.out.println("Client try connect");
-                }
-
-                @Override
-                public void onConnected(IConnector<ClientInetSocketConfig> connector) {
-                    System.out.println("Client connected");
-                }
-
-                @Override
-                public void onConnectFailed(IConnector<ClientInetSocketConfig> connector, Exception cause) {
-                    System.err.println("Client failed to connect because of " + cause.getClass().getName());
-                }
-            }).close();
+        try {
+            handleConnect(new ClientNetConnector(), ClientInetSocketConfig.create("localhost", Constants.GAME_PORT)).close();
         } catch (Exception e) {
+            System.err.println("Client failed to connect!");
             e.printStackTrace();
-        }*/
+        }
+    }
+
+    private static <T, D> IConnection handleConnect(IConnector<T, D> connector, T data) throws Exception {
+        System.out.println("Prepare Client connect");
+        D intermediateRes = connector.prepareConnect(data);
+        System.out.println("Try Client connect");
+        IConnection res = connector.tryConnect(data, intermediateRes);
+        System.out.println("Client connected successfully");
+        return res;
     }
 
     private static void resourceTest() {
