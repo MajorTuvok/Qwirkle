@@ -16,6 +16,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.LineNumberReader;
 
+import static mt.games.qwirkle.helper.Constants.*;
+
 public class Main {
     public static void main(String[] args) {
         registerResources();
@@ -28,12 +30,12 @@ public class Main {
         ResourceManager mang = ResourceManager.INSTANCE;
         for (ValidColour color : ValidColour.values()) {
             if (color == ValidColour.NONE) continue;
-            mang.addResource("plus_" + color.name(), new FilteredImageResource(color.getColor(), "plus.png", ResourceHelper.INTERNAL_SUPPLIER));
-            mang.addResource("minus_" + color.name(), new FilteredImageResource(color.getColor(), "minus.png", ResourceHelper.INTERNAL_SUPPLIER));
-            mang.addResource("multiply_" + color.name(), new FilteredImageResource(color.getColor(), "multiply.png", ResourceHelper.INTERNAL_SUPPLIER));
-            mang.addResource("division_" + color.name(), new FilteredImageResource(color.getColor(), "division.png", ResourceHelper.INTERNAL_SUPPLIER));
-            mang.addResource("sqrt_" + color.name(), new FilteredImageResource(color.getColor(), "sqrt.png", ResourceHelper.INTERNAL_SUPPLIER));
-            mang.addResource("x^2_" + color.name(), new FilteredImageResource(color.getColor(), "x^2.png", ResourceHelper.INTERNAL_SUPPLIER));
+            mang.addResource(PLUS_PIECE_RES_NAME + color.name(), new FilteredImageResource(color.getColor(), "plus.png", ResourceHelper.INTERNAL_SUPPLIER));
+            mang.addResource(MINUS_PIECE_RES_NAME + color.name(), new FilteredImageResource(color.getColor(), "minus.png", ResourceHelper.INTERNAL_SUPPLIER));
+            mang.addResource(MULTIPLY_PIECE_RES_NAME + color.name(), new FilteredImageResource(color.getColor(), "multiply.png", ResourceHelper.INTERNAL_SUPPLIER));
+            mang.addResource(DIVISION_PIECE_RES_NAME + color.name(), new FilteredImageResource(color.getColor(), "division.png", ResourceHelper.INTERNAL_SUPPLIER));
+            mang.addResource(SQUAREROOT_PIECE_RES_NAME + color.name(), new FilteredImageResource(color.getColor(), "sqrt.png", ResourceHelper.INTERNAL_SUPPLIER));
+            mang.addResource(TO_THE_POWER_OF_PIECE_RES_NAME + color.name(), new FilteredImageResource(color.getColor(), "x^2.png", ResourceHelper.INTERNAL_SUPPLIER));
         }
     }
 

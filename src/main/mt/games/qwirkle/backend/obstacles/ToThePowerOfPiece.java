@@ -1,6 +1,6 @@
 package mt.games.qwirkle.backend.obstacles;
 
-import mt.games.qwirkle.resources.ImageResource;
+import mt.games.qwirkle.resources.FilteredImageResource;
 import mt.games.qwirkle.resources.ResourceManager;
 
 import java.awt.*;
@@ -16,6 +16,6 @@ public class ToThePowerOfPiece extends GamePiece {
 
     @Override
     public void render(Graphics2D graphics2D, int xPos, int yPos, int width, int height) {
-        graphics2D.drawImage(((ImageResource) ResourceManager.INSTANCE.findResourceFor("x^2_" + getColour().name())).getImageWrapper().getImage(), xPos, yPos, width, height, null);
+        graphics2D.drawImage(ResourceManager.INSTANCE.findResourceFor(FilteredImageResource.class, TO_THE_POWER_OF_PIECE_RES_NAME + getColour().name()).getImageWrapper().getImage(), xPos, yPos, width, height, null);
     }
 }

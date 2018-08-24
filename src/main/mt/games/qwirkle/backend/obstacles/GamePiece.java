@@ -1,8 +1,9 @@
 package mt.games.qwirkle.backend.obstacles;
 
 import mt.games.qwirkle.gui.IRenderable;
+import mt.games.qwirkle.helper.Constants;
 
-public abstract class GamePiece implements IRenderable {
+public abstract class GamePiece implements IRenderable, Constants {
     private ValidColour mColour;
     private GamePos mGridPos;
 
